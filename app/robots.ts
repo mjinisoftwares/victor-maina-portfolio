@@ -5,7 +5,7 @@ import { defaultContent } from '@/lib/default-content'
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   let allowIndexing = true
-  let baseUrl = 'https://victormaina.dev'
+  let baseUrl = 'https://victormaina.mjinidigital.co.ke/'
 
   try {
     const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL

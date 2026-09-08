@@ -83,7 +83,7 @@ export function getBaseUrl(content?: Partial<WebsiteContent>): string {
   return (
     content?.seo?.canonicalUrl?.replace(/\/$/, '') ||
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
-    'https://victormaina.dev'
+    'https://victormaina.mjinidigital.co.ke/'
   )
 }
 
@@ -648,8 +648,8 @@ export function getDefaultSchemaTemplate(
   const {
     title = 'Example Title',
     description = 'Example description summarizing this content.',
-    url = 'https://victormaina.dev/page',
-    image = 'https://victormaina.dev/og-image.png',
+    url = 'https://victormaina.mjinidigital.co.ke//page',
+    image = 'https://victormaina.mjinidigital.co.ke//og-image.png',
     siteName = 'Victor Maina',
   } = params
 

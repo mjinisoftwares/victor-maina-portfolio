@@ -145,7 +145,7 @@ export function CollectionSeoSection({
       const templateJson = getDefaultSchemaTemplate(type, {
         title: activeTitle,
         description: activeDescription,
-        url: `https://victormaina.dev${itemPath.startsWith('/') ? '' : '/'}${itemPath}`,
+        url: `https://victormaina.mjinidigital.co.ke/${itemPath.startsWith('/') ? '' : '/'}${itemPath}`,
         image: activeImage,
         siteName,
       })
@@ -174,7 +174,7 @@ export function CollectionSeoSection({
     const template = getDefaultSchemaTemplate(type, {
       title: activeTitle,
       description: activeDescription,
-      url: `https://victormaina.dev${itemPath.startsWith('/') ? '' : '/'}${itemPath}`,
+      url: `https://victormaina.mjinidigital.co.ke/${itemPath.startsWith('/') ? '' : '/'}${itemPath}`,
       image: activeImage,
       siteName,
     })

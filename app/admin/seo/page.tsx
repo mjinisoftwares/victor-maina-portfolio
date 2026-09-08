@@ -60,7 +60,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Victor Maina — Full-Stack Web Developer & Designer',
     description: 'Building high-performance web applications, digital platforms, and thoughtful user interfaces.',
     keywords: 'Victor Maina, Full-stack developer, React, Next.js, UI/UX design',
-    canonicalUrl: 'https://victormaina.dev',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke/',
     noIndex: false,
     structuredDataType: 'WebSite',
   },
@@ -70,7 +70,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Selected Works & Case Studies — Victor Maina',
     description: 'Explore full-stack web apps, e-commerce storefronts, and open-source software built by Victor Maina.',
     keywords: 'Victor Maina Portfolio, Web applications, React projects, Next.js showcase',
-    canonicalUrl: 'https://victormaina.dev/projects',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke//projects',
     noIndex: false,
     structuredDataType: 'CollectionPage',
   },
@@ -80,7 +80,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Engineering & Design Services — Victor Maina',
     description: 'Full-stack engineering, custom UI/UX design systems, and fast digital commerce solutions.',
     keywords: 'Web development services, Next.js consulting, UI/UX design systems',
-    canonicalUrl: 'https://victormaina.dev/services',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke//services',
     noIndex: false,
     structuredDataType: 'CollectionPage',
   },
@@ -90,7 +90,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Templates & Starter Kits — Victor Maina',
     description: 'Production-ready web templates, design systems, and developer starter kits.',
     keywords: 'Next.js templates, Convex starter kits, SaaS boilerplates, UI kits',
-    canonicalUrl: 'https://victormaina.dev/templates',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke//templates',
     noIndex: false,
     structuredDataType: 'CollectionPage',
   },
@@ -100,7 +100,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Thoughts & Technical Articles — Victor Maina',
     description: 'Deep dives into modern frontend architecture, Next.js performance, and design systems.',
     keywords: 'Technical blog, Next.js tutorials, Frontend architecture',
-    canonicalUrl: 'https://victormaina.dev/blog',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke//blog',
     noIndex: false,
     structuredDataType: 'CollectionPage',
   },
@@ -110,7 +110,7 @@ const defaultPagesMap: Record<string, PageSeoMeta> = {
     title: 'Get in Touch — Victor Maina',
     description: 'Let’s discuss your next digital project, contract opportunities, or technical consulting.',
     keywords: 'Hire Victor Maina, Contact full-stack developer, Kenya developer inquiry',
-    canonicalUrl: 'https://victormaina.dev/contact',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke//contact',
     noIndex: false,
     structuredDataType: 'ContactPage',
   },
@@ -731,7 +731,7 @@ export default function SeoAdminPage() {
                         <Input
                           value={activePageMeta.canonicalUrl || ''}
                           onChange={(e) => updateSelectedPage({ canonicalUrl: e.target.value })}
-                          placeholder="https://victormaina.dev/..."
+                          placeholder="https://victormaina.mjinidigital.co.ke//..."
                         />
                       </div>
                     </div>

@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const rawBase =
     content.seo?.canonicalUrl ||
     process.env.NEXT_PUBLIC_SITE_URL ||
-    'https://victormaina.dev'
+    'https://victormaina.mjinidigital.co.ke/'
   const baseUrl = rawBase.replace(/\/$/, '')
   const lastUpdated = safeDate(content.lastUpdated)
 

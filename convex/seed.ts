@@ -335,7 +335,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
     title: "Victor Maina — Full-stack web developer",
     description: "Victor Maina is a full-stack web developer building thoughtful, high-performing digital experiences.",
     keywords: "Victor Maina, Full-stack developer, Next.js, React, TypeScript, Kenya developer, UI/UX",
-    canonicalUrl: "https://victormaina.dev",
+    canonicalUrl: "https://victormaina.mjinidigital.co.ke/",
     ogImage: "https://res.cloudinary.com/dcxqwes9x/image/upload/v1738001955/new_jkuh2v.png",
     twitterCard: "summary_large_image",
     allowIndexing: true,
@@ -346,7 +346,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: "Victor Maina — Full-Stack Web Developer & Designer",
         description: "Building high-performance web applications, digital platforms, and thoughtful user interfaces.",
         keywords: "Victor Maina, Full-stack developer, React, Next.js, UI/UX design",
-        canonicalUrl: "https://victormaina.dev",
+        canonicalUrl: "https://victormaina.mjinidigital.co.ke/",
         noIndex: false,
       },
       "/projects": {
@@ -355,7 +355,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: "Selected Works & Case Studies — Victor Maina",
         description: "Explore full-stack web apps, e-commerce storefronts, and open-source software built by Victor Maina.",
         keywords: "Victor Maina Portfolio, Web applications, React projects, Next.js showcase",
-        canonicalUrl: "https://victormaina.dev/projects",
+        canonicalUrl: "https://victormaina.mjinidigital.co.ke//projects",
         noIndex: false,
       },
       "/services": {
@@ -364,7 +364,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: "Engineering & Design Services — Victor Maina",
         description: "Full-stack engineering, custom UI/UX design systems, and fast digital commerce solutions.",
         keywords: "Web development services, Next.js consulting, UI/UX design systems",
-        canonicalUrl: "https://victormaina.dev/services",
+        canonicalUrl: "https://victormaina.mjinidigital.co.ke//services",
         noIndex: false,
       },
       "/blog": {
@@ -373,7 +373,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: "Thoughts & Technical Articles — Victor Maina",
         description: "Deep dives into modern frontend architecture, Next.js performance, and design systems.",
         keywords: "Technical blog, Next.js tutorials, Frontend architecture",
-        canonicalUrl: "https://victormaina.dev/blog",
+        canonicalUrl: "https://victormaina.mjinidigital.co.ke//blog",
         noIndex: false,
       },
       "/contact": {
@@ -382,7 +382,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: "Get in Touch — Victor Maina",
         description: "Let’s discuss your next digital project, contract opportunities, or technical consulting.",
         keywords: "Hire Victor Maina, Contact full-stack developer, Kenya developer inquiry",
-        canonicalUrl: "https://victormaina.dev/contact",
+        canonicalUrl: "https://victormaina.mjinidigital.co.ke//contact",
         noIndex: false,
       },
     },

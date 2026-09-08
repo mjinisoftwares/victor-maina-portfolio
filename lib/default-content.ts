@@ -544,7 +544,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
     title: 'Victor Maina — Website Developer & SEO Expert',
     description: 'Professional Website Developer & SEO Expert based in Nairobi, Kenya, serving clients across all 47 Kenya counties, the United States, the United Kingdom, and worldwide.',
     keywords: 'Website Developer Nairobi, SEO Expert Kenya, Web Developer Kenya 47 Counties, Website Developer USA, SEO Expert UK, Next.js Developer Nairobi, Full-Stack Developer Kenya, WordPress to Next.js Migration',
-    canonicalUrl: 'https://victormaina.dev',
+    canonicalUrl: 'https://victormaina.mjinidigital.co.ke/',
     ogImage: 'https://res.cloudinary.com/dcxqwes9x/image/upload/v1738001955/new_jkuh2v.png',
     twitterCard: 'summary_large_image',
     allowIndexing: true,
@@ -563,7 +563,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Victor Maina — Website Developer & SEO Expert | Nairobi, Kenya',
         description: 'Building high-performance web applications, digital platforms, and SEO-optimized web systems in Nairobi, Kenya, USA, UK, and worldwide.',
         keywords: 'Victor Maina, Website Developer Nairobi, SEO Expert Kenya, Next.js developer, Web design Kenya',
-        canonicalUrl: 'https://victormaina.dev',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke/',
         noIndex: false,
       },
       '/projects': {
@@ -572,7 +572,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Selected Works & Case Studies — Victor Maina',
         description: 'Explore full-stack web apps, e-commerce storefronts, and open-source software built by Victor Maina.',
         keywords: 'Victor Maina Portfolio, Web applications, React projects, Next.js showcase',
-        canonicalUrl: 'https://victormaina.dev/projects',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke//projects',
         noIndex: false,
       },
       '/services': {
@@ -581,7 +581,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Engineering & Design Services — Victor Maina',
         description: 'Full-stack engineering, custom UI/UX design systems, and fast digital commerce solutions.',
         keywords: 'Web development services, Next.js consulting, UI/UX design systems',
-        canonicalUrl: 'https://victormaina.dev/services',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke//services',
         noIndex: false,
       },
       '/templates': {
@@ -590,7 +590,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Templates & Starter Kits — Victor Maina',
         description: 'Production-ready web templates, design systems, and developer starter kits.',
         keywords: 'Next.js templates, Convex starter kits, SaaS boilerplates, UI kits',
-        canonicalUrl: 'https://victormaina.dev/templates',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke//templates',
         noIndex: false,
       },
       '/blog': {
@@ -599,7 +599,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Thoughts & Technical Articles — Victor Maina',
         description: 'Deep dives into modern frontend architecture, Next.js performance, and design systems.',
         keywords: 'Technical blog, Next.js tutorials, Frontend architecture',
-        canonicalUrl: 'https://victormaina.dev/blog',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke//blog',
         noIndex: false,
       },
       '/contact': {
@@ -608,7 +608,7 @@ Tokenization allows seamless light/dark mode switching and custom branding theme
         title: 'Get in Touch — Victor Maina',
         description: 'Let’s discuss your next digital project, contract opportunities, or technical consulting.',
         keywords: 'Hire Victor Maina, Contact full-stack developer, Kenya developer inquiry',
-        canonicalUrl: 'https://victormaina.dev/contact',
+        canonicalUrl: 'https://victormaina.mjinidigital.co.ke//contact',
         noIndex: false,
       },
     },
