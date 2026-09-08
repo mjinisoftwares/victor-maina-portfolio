@@ -42,10 +42,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return []
   }
 
+  // Always use the env var as the authoritative base URL.
+  // The CMS canonicalUrl is for per-page <link rel="canonical"> tags, NOT for the sitemap base.
   const rawBase =
-    content.seo?.canonicalUrl ||
     process.env.NEXT_PUBLIC_SITE_URL ||
-    'https://victormaina.mjinidigital.co.ke/'
+    'https://victormaina.mjinidigital.co.ke'
   const baseUrl = rawBase.replace(/\/$/, '')
   const lastUpdated = safeDate(content.lastUpdated)
 
