@@ -26,7 +26,7 @@ export function Logos({ logos = defaultContent.logos }: LogosProps) {
       whileInView={reduceMotion ? undefined : 'visible'}
       viewport={{ once: true, amount: 0.2 }}
       variants={reveal}
-      className="py-20"
+      className="py-4"
       aria-labelledby="logos-title"
     >
       <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
