@@ -78,11 +78,11 @@ export function Projects({
         amount: 0.15,
       }}
       variants={reveal}
-      className="border-t border-border py-20 sm:py-28"
+      className="border-t border-border py-20 "
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl mt-8">
         {/* Section Header */}
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               {projects.sectionLabel}
@@ -123,7 +123,7 @@ export function Projects({
               }}
               variants={cardReveal}
             >
-              <Card className="group flex h-full flex-col overflow-hidden border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <Card className="group flex h-full flex-col overflow-hidden border-border bg-card transition-all duration-300 shadow-lg hover:-translate-y-1 hover:shadow-xl">
                 {/* Project Image */}
                 <Link
                   href={`/projects/${project.id}`}
@@ -241,6 +241,14 @@ export function Projects({
             </motion.div>
           ))}
         </div>
+      </div>
+      <div className="flex justify-center mt-16 -mb-16">
+        <Button variant="link" size="lg">
+          <Link href="/projects" className="flex items-center gap-2 text-sm font-medium">
+            <ArrowUpRight className="size-4" />
+          View All Projects
+          </Link>
+        </Button>
       </div>
     </motion.section>
   )
