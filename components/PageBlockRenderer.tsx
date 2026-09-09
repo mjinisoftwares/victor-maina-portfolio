@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { WebsiteContent, PageComponentBlock, ServiceItem, TemplateItem } from '@/lib/types/content'
 import { Hero } from '@/components/Hero'
@@ -15,7 +16,7 @@ import CodeBlock from '@/components/code-block'
 import Blog from '@/components/blog'
 import { RichTextRenderer } from '@/components/ui/rich-text-renderer'
 import { GithubIcon } from '@/components/ui/icons'
-import { Sparkles, Check, Code2, ArrowUpRight, Calendar, Clock, ArrowRight, ExternalLink, FileText, X } from 'lucide-react'
+import { Sparkles, Check, Code2, ArrowUpRight, ExternalLink, FileText, X } from 'lucide-react'
 
 interface PageBlockRendererProps {
   path: string
@@ -95,7 +96,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                     <div key={service.id} className={`flex flex-col justify-between rounded-3xl border p-6 transition-all ${service.popular ? 'border-primary bg-primary/5 shadow-xl shadow-primary/5' : 'border-border bg-card'}`}>
                       <div>
                         <div className="flex items-center justify-between">
-                          <div className="rounded-2xl bg-primary/10 p-3 text-primary"><Code2 className="size-6" /></div>
+                          <div className="rounded-2xl bg-primary/10 p-3 text-primary"><Code2 className="size-6" aria-hidden="true" /></div>
                           {service.popular && <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">Most Popular</span>}
                         </div>
                         <Link href={`/services/${service.id}`} className="group/title block">
@@ -111,10 +112,10 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
 
                         <div className="mt-6 border-t border-border pt-4">
                           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">What&apos;s Included</p>
-                          <ul className="mt-3 space-y-2.5">
+                          <ul className="mt-3 space-y-2.5 list-none p-0">
                             {service.features.map((feature, idx) => (
                               <li key={idx} className="flex items-start gap-2.5 text-xs text-muted-foreground">
-                                <Check className="size-4 text-primary shrink-0 mt-0.5" /><span>{feature}</span>
+                                <Check className="size-4 text-primary shrink-0 mt-0.5" aria-hidden="true" /><span>{feature}</span>
                               </li>
                             ))}
                           </ul>
@@ -127,7 +128,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                             href={`/services/${service.id}`}
                             className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline cursor-pointer"
                           >
-                            <FileText className="size-3.5" /> View Scope & Details
+                            <FileText className="size-3.5" aria-hidden="true" /> View Scope &amp; Details
                           </Link>
                         </div>
 
@@ -137,7 +138,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                             <p className="text-lg font-bold text-foreground">{service.price || 'Custom scope'}</p>
                           </div>
                           <Link href="/contact" className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
-                            Inquire Now <ArrowUpRight className="size-3.5" />
+                            Inquire Now <ArrowUpRight className="size-3.5" aria-hidden="true" />
                           </Link>
                         </div>
                       </div>
@@ -162,7 +163,13 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                         {tmpl.previewImage && (
                           <Link href={`/templates/${tmpl.id}`} className="block">
                             <div className="relative aspect-video w-full overflow-hidden bg-muted">
-                              <img src={tmpl.previewImage} alt={tmpl.title} className="size-full object-cover transition-transform duration-500 hover:scale-105" />
+                              <Image
+                                src={tmpl.previewImage}
+                                alt={tmpl.title}
+                                fill
+                                className="object-cover transition-transform duration-500 hover:scale-105"
+                                sizes="(max-width: 1024px) 100vw, 33vw"
+                              />
                             </div>
                           </Link>
                         )}
@@ -197,10 +204,10 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                           {tmpl.features?.length > 0 && (
                             <div className="mt-5 border-t border-border pt-4">
                               <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Key Highlights</p>
-                              <ul className="space-y-1.5">
+                              <ul className="space-y-1.5 list-none p-0">
                                 {tmpl.features.slice(0, 3).map((feat, idx) => (
                                   <li key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
-                                    <Check className="size-3 text-primary shrink-0" />
+                                    <Check className="size-3 text-primary shrink-0" aria-hidden="true" />
                                     <span>{feat}</span>
                                   </li>
                                 ))}
@@ -215,18 +222,18 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                           href={`/templates/${tmpl.id}`}
                           className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline cursor-pointer"
                         >
-                          <FileText className="size-3.5" /> Details & Overview
+                          <FileText className="size-3.5" aria-hidden="true" /> Details &amp; Overview
                         </Link>
 
                         <div className="flex items-center gap-2">
                           {tmpl.githubUrl && (
-                            <a href={tmpl.githubUrl} target="_blank" rel="noreferrer" className="rounded-xl border border-border p-2 text-muted-foreground hover:text-foreground">
-                              <GithubIcon className="size-3.5" />
+                            <a href={tmpl.githubUrl} target="_blank" rel="noreferrer" className="rounded-xl border border-border p-2 text-muted-foreground hover:text-foreground" aria-label="GitHub Repository">
+                              <GithubIcon className="size-3.5" aria-hidden="true" />
                             </a>
                           )}
                           {tmpl.liveDemoUrl && (
-                            <a href={tmpl.liveDemoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90">
-                              Demo <ExternalLink className="size-3" />
+                            <a href={tmpl.liveDemoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90" aria-label="Live Demo">
+                              Demo <ExternalLink className="size-3" aria-hidden="true" />
                             </a>
                           )}
                         </div>
@@ -303,7 +310,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
               <section key={block.id} className="my-12">
                 <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/10 via-card to-background p-8 sm:p-12 text-center shadow-xl">
                   <div className="mx-auto max-w-2xl">
-                    <Sparkles className="mx-auto size-8 text-primary animate-pulse" />
+                    <Sparkles className="mx-auto size-8 text-primary animate-pulse" aria-hidden="true" />
                     <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                       {d.title || block.title || 'Ready to start your next project?'}
                     </h2>
@@ -313,7 +320,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                     <div className="mt-8 flex justify-center">
                       <Link href={d.ctaLink || '/contact'} className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90 transition-all hover:scale-105">
                         <span>{d.ctaText || 'Get in Touch'}</span>
-                        <ArrowUpRight className="size-4" />
+                        <ArrowUpRight className="size-4" aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -324,7 +331,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
           case 'customHtml':
             return (
               <section key={block.id} className="my-12 rounded-3xl border border-border bg-card p-6 sm:p-8">
-                <h3 className="text-xl font-bold tracking-tight text-foreground">{d.title || block.title}</h3>
+                <h2 className="text-xl font-bold tracking-tight text-foreground">{d.title || block.title}</h2>
                 {d.description && <p className="mt-2 text-sm text-muted-foreground">{d.description}</p>}
                 {d.html && (
                   <div className="prose prose-neutral dark:prose-invert mt-6 max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: d.html }} />
@@ -339,11 +346,11 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
 
       {/* Service Scope & Deliverables Modal (if modal fallback triggered) */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true">
           <div className="relative w-full max-w-2xl rounded-3xl border border-border bg-background p-6 sm:p-8 shadow-2xl max-h-[88vh] overflow-y-auto space-y-6">
             <div className="flex items-start justify-between border-b border-border pb-4">
               <div>
-                <span className="font-mono text-xs uppercase tracking-wider text-primary font-semibold">Service Scope & Deliverables</span>
+                <span className="font-mono text-xs uppercase tracking-wider text-primary font-semibold">Service Scope &amp; Deliverables</span>
                 <h3 className="mt-1 text-2xl font-bold tracking-tight text-foreground">{selectedService.title}</h3>
                 {selectedService.summary && (
                   <p className="mt-2 text-sm text-muted-foreground">{selectedService.summary}</p>
@@ -353,8 +360,9 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                 type="button"
                 onClick={() => setSelectedService(null)}
                 className="rounded-xl p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                aria-label="Close modal"
               >
-                <X className="size-5" />
+                <X className="size-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -369,10 +377,10 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
             {selectedService.features?.length > 0 && (
               <div className="rounded-2xl border border-border bg-card p-4 space-y-3">
                 <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Key Deliverables</p>
-                <ul className="space-y-2">
+                <ul className="space-y-2 list-none p-0">
                   {selectedService.features.map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-2.5 text-xs text-muted-foreground">
-                      <Check className="size-4 text-primary shrink-0 mt-0.5" />
+                      <Check className="size-4 text-primary shrink-0 mt-0.5" aria-hidden="true" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -389,7 +397,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
               >
-                Inquire for this Service <ArrowUpRight className="size-3.5" />
+                Inquire for this Service <ArrowUpRight className="size-3.5" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -398,7 +406,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
 
       {/* Template Details Modal (if modal fallback triggered) */}
       {selectedTemplate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true">
           <div className="relative w-full max-w-2xl rounded-3xl border border-border bg-background p-6 sm:p-8 shadow-2xl max-h-[88vh] overflow-y-auto space-y-6">
             <div className="flex items-start justify-between border-b border-border pb-4">
               <div>
@@ -412,14 +420,21 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                 type="button"
                 onClick={() => setSelectedTemplate(null)}
                 className="rounded-xl p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                aria-label="Close modal"
               >
-                <X className="size-5" />
+                <X className="size-5" aria-hidden="true" />
               </button>
             </div>
 
             {selectedTemplate.previewImage && (
-              <div className="overflow-hidden rounded-2xl border border-border aspect-video">
-                <img src={selectedTemplate.previewImage} alt={selectedTemplate.title} className="size-full object-cover" />
+              <div className="relative overflow-hidden rounded-2xl border border-border aspect-video">
+                <Image
+                  src={selectedTemplate.previewImage}
+                  alt={selectedTemplate.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 672px"
+                />
               </div>
             )}
 
@@ -444,7 +459,7 @@ export function PageBlockRenderer({ path, content }: PageBlockRendererProps) {
                 )}
                 {selectedTemplate.liveDemoUrl && (
                   <a href={selectedTemplate.liveDemoUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors">
-                    Live Demo <ExternalLink className="size-3.5" />
+                    Live Demo <ExternalLink className="size-3.5" aria-hidden="true" />
                   </a>
                 )}
               </div>

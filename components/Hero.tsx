@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowUpRight, BriefcaseBusiness, Code2, Mail, MapPin, Sparkles, Globe } from 'lucide-react'
 import Link from 'next/link'
@@ -34,14 +35,15 @@ export function Hero({
       whileInView={reduceMotion ? undefined : 'visible'}
       viewport={{ once: true, amount: 0.2 }}
       variants={reveal}
-      className="md:mt-12 grid items-center gap-14 py-16  md:grid-cols-[1.08fr_0.92fr] lg:gap-16"
+      className="md:mt-12 grid items-center gap-14 py-16 md:grid-cols-[1.08fr_0.92fr] lg:gap-16"
+      aria-label="Introduction"
     >
       <div className="max-w-5xl">
         <p className="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground sm:text-sm">
           <Sparkles className="size-4 text-primary" aria-hidden="true" />
           {hero.badge}
         </p>
-        <h1 className="max-w-5xl text-5xl font-bold leading-[0.98] tracking-[-0.06em] lg:text-7xl ">
+        <h1 className="max-w-5xl text-5xl font-bold leading-[0.98] tracking-[-0.06em] lg:text-7xl">
           {hero.titleLine1} <span className="text-primary">{hero.titleHighlight1}</span>{' '}
           {hero.titleLine2} <span className="text-primary">{hero.titleHighlight2}</span>
         </h1>
@@ -51,7 +53,7 @@ export function Hero({
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
           <Link
             href={hero.primaryCtaLink}
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-muted dark:text-white/90  transition-transform hover:-translate-y-0.5"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-muted dark:text-white/90 transition-transform hover:-translate-y-0.5"
           >
             {hero.primaryCtaText}
             <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
@@ -61,10 +63,9 @@ export function Hero({
             className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-3 text-sm font-semibold transition-colors hover:border-primary/50 hover:text-primary"
           >
             {hero.secondaryCtaText}
-            <Mail className="size-4" />
+            <Mail className="size-4" aria-hidden="true" />
           </Link>
         </div>
-
       </div>
 
       <motion.div
@@ -72,13 +73,16 @@ export function Hero({
         transition={reduceMotion ? {} : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         className="relative mx-auto w-full max-w-md lg:ml-auto"
       >
-        <div className="absolute -inset-5 rounded-full border border-primary/10 sm:-inset-9" />
-        <div className="absolute -inset-10 rounded-full border border-dashed border-primary/15 sm:-inset-16" />
+        <div className="absolute -inset-5 rounded-full border border-primary/10 sm:-inset-9" aria-hidden="true" />
+        <div className="absolute -inset-10 rounded-full border border-dashed border-primary/15 sm:-inset-16" aria-hidden="true" />
         <div className="relative aspect-square overflow-hidden rounded-full border-[10px] border-primary bg-primary/10 shadow-[0_24px_80px_-24px_color-mix(in_oklab,var(--primary),transparent_35%)] flex items-center justify-center">
           {hero.avatarUrl && !imgError ? (
-            <img
+            <Image
               src={hero.avatarUrl}
-              alt={hero.badge}
+              alt={hero.badge || 'Profile avatar'}
+              fill
+              priority
+              sizes="(max-width: 768px) 320px, 448px"
               onError={() => setImgError(true)}
               className="h-full w-full object-cover"
             />
@@ -97,35 +101,34 @@ export function Hero({
             <span className="text-primary">{hero.statusCardHighlight}</span>
           </p>
         </div>
-          <div className="w-full items-center gap-x-5 gap-y-3 text-sm text-muted-foreground">
+        <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted-foreground" aria-label="Location and social links">
           <span className="inline-flex items-center gap-2">
             <MapPin className="size-4 text-primary" aria-hidden="true" />
             {hero.locationText}
           </span>
           {socials.map((soc) => (
             <span key={soc.id} className="inline-flex items-center gap-3">
-              <span className="h-4 w-px bg-border" />
+              <span className="h-4 w-px bg-border" aria-hidden="true" />
               <a
                 href={soc.url}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+                aria-label={soc.label || soc.platform}
               >
                 {soc.platform.toLowerCase().includes('github') ? (
-                  <Code2 className="size-4" />
+                  <Code2 className="size-4" aria-hidden="true" />
                 ) : soc.platform.toLowerCase().includes('linkedin') ? (
-                  <BriefcaseBusiness className="size-4" />
+                  <BriefcaseBusiness className="size-4" aria-hidden="true" />
                 ) : (
-                  <Globe className="size-4" />
+                  <Globe className="size-4" aria-hidden="true" />
                 )}
                 {soc.label || soc.platform}
               </a>
             </span>
           ))}
-        </div>
+        </nav>
       </motion.div>
-      
-      
     </motion.section>
   )
 }

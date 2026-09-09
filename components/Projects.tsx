@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import { ArrowUpRight, ExternalLink, FileText, X } from 'lucide-react'
 import { GithubIcon } from '@/components/ui/icons'
@@ -8,7 +9,6 @@ import Link from 'next/link'
 import { ProjectsContent, ProjectItem } from '@/lib/types/content'
 import { defaultContent } from '@/lib/default-content'
 import { RichTextRenderer } from '@/components/ui/rich-text-renderer'
-import { Button } from '@/components/ui/button'
 
 const reveal: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -51,7 +51,7 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
           className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
         >
           {projects.ctaText}
-          <ArrowUpRight className="size-4" />
+          <ArrowUpRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
       <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -65,10 +65,12 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
               <Link href={`/projects/${project.id}`} className="block">
                 <div className={`relative flex aspect-[1.25] items-end p-5 overflow-hidden ${project.accent || 'bg-primary'}`}>
                   {project.image && (
-                    <img
+                    <Image
                       src={project.image}
                       alt={project.title}
-                      className="absolute inset-0 size-full object-cover opacity-35 transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      className="object-cover opacity-35 transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
                     />
                   )}
                   <div className="relative z-10 w-full rounded-2xl border border-background/20 bg-background/20 p-4 backdrop-blur-md">
@@ -92,17 +94,17 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                 href={`/projects/${project.id}`}
                 className="mb-4 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline cursor-pointer"
               >
-                <FileText className="size-3.5" /> Read Case Study & Overview
+                <FileText className="size-3.5" aria-hidden="true" /> Read Case Study &amp; Overview
               </Link>
 
               <div className="flex items-center justify-between border-t border-border pt-4">
-                <div className="flex flex-wrap gap-1.5">
+                <ul className="flex flex-wrap gap-1.5 list-none p-0 m-0" aria-label="Project technologies">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[10px] text-secondary-foreground">
+                    <li key={tag} className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[10px] text-secondary-foreground">
                       {tag}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
                 <div className="flex items-center gap-2">
                   {project.githubUrl && (
                     <a
@@ -110,9 +112,9 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                       target="_blank"
                       rel="noreferrer"
                       className="text-muted-foreground hover:text-foreground transition-colors"
-                      aria-label="GitHub Repository"
+                      aria-label={`${project.title} source code on GitHub`}
                     >
-                      <GithubIcon className="size-4" />
+                      <GithubIcon className="size-4" aria-hidden="true" />
                     </a>
                   )}
                   {project.liveUrl && (
@@ -121,9 +123,9 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                       target="_blank"
                       rel="noreferrer"
                       className="text-muted-foreground transition-colors group-hover:text-primary"
-                      aria-label="Live Project"
+                      aria-label={`Open ${project.title} live project`}
                     >
-                      <ExternalLink className="size-4" />
+                      <ExternalLink className="size-4" aria-hidden="true" />
                     </a>
                   )}
                 </div>
@@ -135,7 +137,7 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
 
       {/* Case Study Modal */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true">
           <div className="relative w-full max-w-3xl rounded-3xl border border-border bg-background p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto space-y-6">
             <div className="flex items-start justify-between border-b border-border pb-4">
               <div>
@@ -153,17 +155,20 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                 type="button"
                 onClick={() => setSelectedProject(null)}
                 className="rounded-xl p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                aria-label="Close modal"
               >
-                <X className="size-5" />
+                <X className="size-5" aria-hidden="true" />
               </button>
             </div>
 
             {selectedProject.image && (
-              <div className="overflow-hidden rounded-2xl border border-border aspect-video">
-                <img
+              <div className="relative overflow-hidden rounded-2xl border border-border aspect-video">
+                <Image
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="size-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 768px"
                 />
               </div>
             )}
@@ -177,13 +182,13 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
             )}
 
             <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-4">
-              <div className="flex flex-wrap gap-1.5">
+              <ul className="flex flex-wrap gap-1.5 list-none p-0 m-0">
                 {selectedProject.tags.map((tag) => (
-                  <span key={tag} className="rounded-full bg-secondary px-2.5 py-1 font-mono text-xs text-secondary-foreground">
+                  <li key={tag} className="rounded-full bg-secondary px-2.5 py-1 font-mono text-xs text-secondary-foreground">
                     {tag}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
               <div className="flex items-center gap-3">
                 {selectedProject.githubUrl && (
                   <a
@@ -191,8 +196,9 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-xl border border-border px-3.5 py-2 text-xs font-semibold text-foreground hover:bg-muted transition-colors"
+                    aria-label="View source code on GitHub"
                   >
-                    <GithubIcon className="size-3.5" /> View Code
+                    <GithubIcon className="size-3.5" aria-hidden="true" /> View Code
                   </a>
                 )}
                 {selectedProject.liveUrl && (
@@ -201,8 +207,9 @@ export function Projects({ projects = defaultContent.projects }: ProjectsProps) 
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                    aria-label="Launch live project"
                   >
-                    Launch Project <ExternalLink className="size-3.5" />
+                    Launch Project <ExternalLink className="size-3.5" aria-hidden="true" />
                   </a>
                 )}
               </div>

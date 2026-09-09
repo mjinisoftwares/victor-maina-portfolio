@@ -56,10 +56,12 @@ const Blog = ({ blog }: { blog?: BlogContent }) => {
               <CardHeader className="relative p-0 shrink-0">
                 <Link href={`/blog/${post.slug}`}>
                   <div className="relative aspect-video w-full border-b overflow-hidden group">
-                    <img
+                    <Image
                       alt={post.title}
                       className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
                       src={post.coverImage}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
                 </Link>
