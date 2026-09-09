@@ -429,6 +429,371 @@ function CustomHtmlEditor({ data, onChange }: { data: Record<string, any>; onCha
   )
 }
 
+// ---------------------------------------------------------------------------
+// Features editor
+// ---------------------------------------------------------------------------
+
+interface FeatureItem { id: string; title: string; description: string; icon?: string }
+
+function FeaturesEditor({ data, onChange }: { data: Record<string, any>; onChange: (d: Record<string, any>) => void }) {
+  const items: FeatureItem[] = data.items || []
+  const [expanded, setExpanded] = useState<number | null>(null)
+  const set = (key: string, val: any) => onChange({ ...data, [key]: val })
+
+  const addItem = () => {
+    const newItem: FeatureItem = { id: `feat-${Date.now()}`, title: '', description: '', icon: 'Zap' }
+    set('items', [...items, newItem])
+    setExpanded(items.length)
+  }
+
+  const updateItem = (i: number, field: keyof FeatureItem, val: string) => {
+    set('items', items.map((item, idx) => idx === i ? { ...item, [field]: val } : item))
+  }
+
+  const removeItem = (i: number) => {
+    set('items', items.filter((_, idx) => idx !== i))
+    setExpanded(null)
+  }
+
+  return (
+    <div className="space-y-4">
+      <SectionDivider label="Section Header" />
+      <FieldRow label="Section Label" hint="Small label above title">
+        <Input value={data.sectionLabel || ''} onChange={e => set('sectionLabel', e.target.value)} placeholder="Features that make you happy" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Title">
+        <Input value={data.title || ''} onChange={e => set('title', e.target.value)} placeholder="Designed to scale" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Subtitle">
+        <Input value={data.subtitle || ''} onChange={e => set('subtitle', e.target.value)} placeholder="Spend less time configuring..." className="text-sm" />
+      </FieldRow>
+
+      <SectionDivider label="Feature Items" />
+      <div className="space-y-2">
+        {items.map((item, i) => (
+          <div key={item.id} className="rounded-xl border border-border overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setExpanded(expanded === i ? null : i)}
+              className="flex w-full items-center justify-between gap-2 p-3 text-left hover:bg-muted/40 transition-colors"
+            >
+              <span className="text-sm font-medium text-foreground line-clamp-1">
+                {item.title || <span className="text-muted-foreground italic">Untitled feature {i + 1}</span>}
+              </span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button type="button" onClick={e => { e.stopPropagation(); removeItem(i) }} className="rounded p-1 text-destructive hover:bg-destructive/10">
+                  <Trash2 className="size-3.5" />
+                </button>
+                {expanded === i ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
+              </div>
+            </button>
+            {expanded === i && (
+              <div className="border-t border-border p-3 space-y-2 bg-muted/10">
+                <div className="grid grid-cols-2 gap-2">
+                  <FieldRow label="Title">
+                    <Input value={item.title} onChange={e => updateItem(i, 'title', e.target.value)} placeholder="Feature name" className="text-sm" />
+                  </FieldRow>
+                  <FieldRow label="Icon" hint="Lucide icon name">
+                    <Input value={item.icon || ''} onChange={e => updateItem(i, 'icon', e.target.value)} placeholder="Zap" className="text-sm font-mono" />
+                  </FieldRow>
+                </div>
+                <FieldRow label="Description">
+                  <Textarea value={item.description} onChange={e => updateItem(i, 'description', e.target.value)} rows={2} placeholder="What this feature does..." className="text-sm resize-none" />
+                </FieldRow>
+              </div>
+            )}
+          </div>
+        ))}
+        <Button type="button" variant="outline" size="sm" onClick={addItem} className="w-full gap-1.5 text-xs">
+          <Plus className="size-3.5" /> Add Feature
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Pricing editor
+// ---------------------------------------------------------------------------
+
+interface PricingPlanItem { id: string; name: string; description: string; price: number; isRecommended: boolean; icon?: string; features: string[] }
+
+function PricingEditor({ data, onChange }: { data: Record<string, any>; onChange: (d: Record<string, any>) => void }) {
+  const plans: PricingPlanItem[] = data.plans || []
+  const [expanded, setExpanded] = useState<number | null>(null)
+  const set = (key: string, val: any) => onChange({ ...data, [key]: val })
+
+  const addPlan = () => {
+    const newPlan: PricingPlanItem = {
+      id: `plan-${Date.now()}`, name: '', description: '', price: 0, isRecommended: false, icon: 'Zap', features: []
+    }
+    set('plans', [...plans, newPlan])
+    setExpanded(plans.length)
+  }
+
+  const updatePlan = (i: number, field: keyof PricingPlanItem, val: any) => {
+    set('plans', plans.map((p, idx) => idx === i ? { ...p, [field]: val } : p))
+  }
+
+  const removePlan = (i: number) => {
+    set('plans', plans.filter((_, idx) => idx !== i))
+    setExpanded(null)
+  }
+
+  const addFeature = (planIdx: number) => {
+    const plan = plans[planIdx]
+    updatePlan(planIdx, 'features', [...(plan.features || []), ''])
+  }
+
+  const updateFeature = (planIdx: number, featIdx: number, val: string) => {
+    const plan = plans[planIdx]
+    const updated = (plan.features || []).map((f, i) => i === featIdx ? val : f)
+    updatePlan(planIdx, 'features', updated)
+  }
+
+  const removeFeature = (planIdx: number, featIdx: number) => {
+    const plan = plans[planIdx]
+    updatePlan(planIdx, 'features', (plan.features || []).filter((_, i) => i !== featIdx))
+  }
+
+  return (
+    <div className="space-y-4">
+      <SectionDivider label="Section Header" />
+      <FieldRow label="Section Label">
+        <Input value={data.sectionLabel || ''} onChange={e => set('sectionLabel', e.target.value)} placeholder="Pricing" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Title">
+        <Input value={data.title || ''} onChange={e => set('title', e.target.value)} placeholder="Simple, transparent pricing" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Subtitle">
+        <Textarea value={data.subtitle || ''} onChange={e => set('subtitle', e.target.value)} rows={2} className="text-sm resize-none" />
+      </FieldRow>
+
+      <SectionDivider label="Pricing Plans" />
+      <div className="space-y-2">
+        {plans.map((plan, i) => (
+          <div key={plan.id} className="rounded-xl border border-border overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setExpanded(expanded === i ? null : i)}
+              className="flex w-full items-center justify-between gap-2 p-3 text-left hover:bg-muted/40 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-foreground line-clamp-1">
+                  {plan.name || <span className="text-muted-foreground italic">Untitled plan {i + 1}</span>}
+                </span>
+                {plan.isRecommended && (
+                  <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-mono text-primary">Popular</span>
+                )}
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button type="button" onClick={e => { e.stopPropagation(); removePlan(i) }} className="rounded p-1 text-destructive hover:bg-destructive/10">
+                  <Trash2 className="size-3.5" />
+                </button>
+                {expanded === i ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
+              </div>
+            </button>
+            {expanded === i && (
+              <div className="border-t border-border p-3 space-y-3 bg-muted/10">
+                <div className="grid grid-cols-2 gap-2">
+                  <FieldRow label="Plan Name">
+                    <Input value={plan.name} onChange={e => updatePlan(i, 'name', e.target.value)} placeholder="Pro" className="text-sm" />
+                  </FieldRow>
+                  <FieldRow label="Icon" hint="Lucide icon name">
+                    <Input value={plan.icon || ''} onChange={e => updatePlan(i, 'icon', e.target.value)} placeholder="Zap" className="text-sm font-mono" />
+                  </FieldRow>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <FieldRow label="Price ($/mo)">
+                    <Input type="number" value={plan.price} onChange={e => updatePlan(i, 'price', Number(e.target.value))} placeholder="49" className="text-sm font-mono" />
+                  </FieldRow>
+                  <FieldRow label="Mark as Recommended">
+                    <div className="flex h-9 items-center">
+                      <input
+                        type="checkbox"
+                        id={`recommended-${i}`}
+                        checked={!!plan.isRecommended}
+                        onChange={e => updatePlan(i, 'isRecommended', e.target.checked)}
+                        className="size-4 rounded border-border accent-primary"
+                      />
+                      <label htmlFor={`recommended-${i}`} className="ml-2 text-xs text-muted-foreground">Most Popular badge</label>
+                    </div>
+                  </FieldRow>
+                </div>
+                <FieldRow label="Description">
+                  <Textarea value={plan.description} onChange={e => updatePlan(i, 'description', e.target.value)} rows={2} placeholder="Best for teams..." className="text-sm resize-none" />
+                </FieldRow>
+
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-semibold text-foreground">Features / Bullet Points</Label>
+                  {(plan.features || []).map((feat, fi) => (
+                    <div key={fi} className="flex items-center gap-2">
+                      <Input value={feat} onChange={e => updateFeature(i, fi, e.target.value)} placeholder="Feature description" className="text-sm" />
+                      <Button type="button" variant="ghost" size="icon" className="size-7 text-destructive shrink-0" onClick={() => removeFeature(i, fi)}>
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    </div>
+                  ))}
+                  <Button type="button" variant="outline" size="sm" onClick={() => addFeature(i)} className="w-full gap-1 text-xs mt-1">
+                    <Plus className="size-3" /> Add Feature
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+        <Button type="button" variant="outline" size="sm" onClick={addPlan} className="w-full gap-1.5 text-xs">
+          <Plus className="size-3.5" /> Add Pricing Plan
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Stats editor
+// ---------------------------------------------------------------------------
+
+interface StatItem { id: string; value: string; label: string; description: string }
+
+function StatsEditor({ data, onChange }: { data: Record<string, any>; onChange: (d: Record<string, any>) => void }) {
+  const items: StatItem[] = data.items || []
+  const set = (key: string, val: any) => onChange({ ...data, [key]: val })
+
+  const addItem = () => {
+    set('items', [...items, { id: `stat-${Date.now()}`, value: '', label: '', description: '' }])
+  }
+
+  const updateItem = (i: number, field: keyof StatItem, val: string) => {
+    set('items', items.map((item, idx) => idx === i ? { ...item, [field]: val } : item))
+  }
+
+  const removeItem = (i: number) => set('items', items.filter((_, idx) => idx !== i))
+
+  return (
+    <div className="space-y-4">
+      <SectionDivider label="Section Header" />
+      <FieldRow label="Section Label">
+        <Input value={data.sectionLabel || ''} onChange={e => set('sectionLabel', e.target.value)} placeholder="By the numbers" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Title">
+        <Input value={data.title || ''} onChange={e => set('title', e.target.value)} placeholder="Results that speak" className="text-sm" />
+      </FieldRow>
+      <FieldRow label="Subtitle">
+        <Input value={data.subtitle || ''} onChange={e => set('subtitle', e.target.value)} placeholder="Real impact, real numbers" className="text-sm" />
+      </FieldRow>
+
+      <SectionDivider label="Stat Items" />
+      <div className="space-y-3">
+        {items.map((item, i) => (
+          <div key={item.id} className="rounded-xl border border-border bg-muted/20 p-3 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs font-bold text-primary">Stat {i + 1}</span>
+              <Button type="button" variant="ghost" size="icon" className="size-7 text-destructive" onClick={() => removeItem(i)}>
+                <Trash2 className="size-3.5" />
+              </Button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <FieldRow label="Value" hint="e.g. 50+">
+                <Input value={item.value} onChange={e => updateItem(i, 'value', e.target.value)} placeholder="50+" className="text-sm font-mono" />
+              </FieldRow>
+              <FieldRow label="Label">
+                <Input value={item.label} onChange={e => updateItem(i, 'label', e.target.value)} placeholder="Projects completed" className="text-sm" />
+              </FieldRow>
+            </div>
+            <FieldRow label="Description">
+              <Input value={item.description} onChange={e => updateItem(i, 'description', e.target.value)} placeholder="Short supporting detail" className="text-sm" />
+            </FieldRow>
+          </div>
+        ))}
+        <Button type="button" variant="outline" size="sm" onClick={addItem} className="w-full gap-1.5 text-xs">
+          <Plus className="size-3.5" /> Add Stat
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Code Block editor
+// ---------------------------------------------------------------------------
+
+interface CodeFile { id: string; filename: string; language: string; code: string }
+
+function CodeBlockEditor({ data, onChange }: { data: Record<string, any>; onChange: (d: Record<string, any>) => void }) {
+  const files: CodeFile[] = data.files || []
+  const [expanded, setExpanded] = useState<number | null>(null)
+  const set = (key: string, val: any) => onChange({ ...data, [key]: val })
+
+  const addFile = () => {
+    const newFile: CodeFile = { id: `file-${Date.now()}`, filename: 'index.tsx', language: 'tsx', code: '' }
+    set('files', [...files, newFile])
+    setExpanded(files.length)
+  }
+
+  const updateFile = (i: number, field: keyof CodeFile, val: string) => {
+    set('files', files.map((f, idx) => idx === i ? { ...f, [field]: val } : f))
+  }
+
+  const removeFile = (i: number) => {
+    set('files', files.filter((_, idx) => idx !== i))
+    setExpanded(null)
+  }
+
+  return (
+    <div className="space-y-4">
+      <SectionDivider label="Code Files" />
+      <p className="text-xs text-muted-foreground">Add one or more files. Each becomes a tab in the code viewer.</p>
+      <div className="space-y-2">
+        {files.map((file, i) => (
+          <div key={file.id} className="rounded-xl border border-border overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setExpanded(expanded === i ? null : i)}
+              className="flex w-full items-center justify-between gap-2 p-3 text-left hover:bg-muted/40 transition-colors"
+            >
+              <span className="text-sm font-mono text-foreground line-clamp-1">
+                {file.filename || <span className="text-muted-foreground italic">Untitled file {i + 1}</span>}
+              </span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">{file.language || 'tsx'}</span>
+                <button type="button" onClick={e => { e.stopPropagation(); removeFile(i) }} className="rounded p-1 text-destructive hover:bg-destructive/10">
+                  <Trash2 className="size-3.5" />
+                </button>
+                {expanded === i ? <ChevronUp className="size-4 text-muted-foreground" /> : <ChevronDown className="size-4 text-muted-foreground" />}
+              </div>
+            </button>
+            {expanded === i && (
+              <div className="border-t border-border p-3 space-y-2 bg-muted/10">
+                <div className="grid grid-cols-2 gap-2">
+                  <FieldRow label="Filename">
+                    <Input value={file.filename} onChange={e => updateFile(i, 'filename', e.target.value)} placeholder="index.tsx" className="text-sm font-mono" />
+                  </FieldRow>
+                  <FieldRow label="Language" hint="shiki lang">
+                    <Input value={file.language} onChange={e => updateFile(i, 'language', e.target.value)} placeholder="tsx" className="text-sm font-mono" />
+                  </FieldRow>
+                </div>
+                <FieldRow label="Code">
+                  <Textarea
+                    value={file.code}
+                    onChange={e => updateFile(i, 'code', e.target.value)}
+                    rows={10}
+                    placeholder="// Paste your code here"
+                    className="text-xs font-mono resize-y leading-relaxed"
+                  />
+                </FieldRow>
+              </div>
+            )}
+          </div>
+        ))}
+        <Button type="button" variant="outline" size="sm" onClick={addFile} className="w-full gap-1.5 text-xs">
+          <Plus className="size-3.5" /> Add Code File
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 function FixedBlockNotice({ type }: { type: ComponentBlockType }) {
   const labels: Record<string, { icon: React.ReactNode; label: string; href: string }> = {
     projects: { icon: <Briefcase className="size-4" />, label: 'Projects Collection', href: '/admin/website-content/collections/projects' },
@@ -555,6 +920,10 @@ export function BlockContentEditor({ block, globalContent, onSave, onClose }: Bl
       case 'faq':        return <FaqEditor data={localData} onChange={setLocalData} />
       case 'ctaBanner':  return <CtaBannerEditor data={localData} onChange={setLocalData} />
       case 'customHtml': return <CustomHtmlEditor data={localData} onChange={setLocalData} />
+      case 'features':   return <FeaturesEditor data={localData} onChange={setLocalData} />
+      case 'pricing':    return <PricingEditor data={localData} onChange={setLocalData} />
+      case 'stats':      return <StatsEditor data={localData} onChange={setLocalData} />
+      case 'codeBlock':  return <CodeBlockEditor data={localData} onChange={setLocalData} />
       default: return (
         <div className="py-8 text-center text-sm text-muted-foreground">
           No editable fields for this block type.
